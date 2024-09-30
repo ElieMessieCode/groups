@@ -1,0 +1,27 @@
+{
+  "name": "groups-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Application de Répartition Aléatoire d'Étudiants - React / Express / MySQL / Pure Domain",
+  "scripts": {
+    "build": "pnpm --filter @groups/domain build && pnpm --filter @groups/api build && pnpm --filter @groups/web build",
+    "typecheck": "pnpm --filter \"@groups/*\" typecheck",
+    "lint": "pnpm --filter \"@groups/*\" lint",
+    "test": "pnpm --filter @groups/domain test && pnpm --filter @groups/api test && pnpm --filter @groups/web test",
+    "test:coverage": "pnpm --filter @groups/domain test:coverage && pnpm --filter @groups/api test:coverage && pnpm --filter @groups/web test",
+    "dev:api": "pnpm --filter @groups/api dev",
+    "dev:web": "pnpm --filter @groups/web dev",
+    "db:migrate": "pnpm --filter @groups/api db:migrate",
+    "db:seed": "pnpm --filter @groups/api db:seed"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "argon2", "@swc/core"]
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

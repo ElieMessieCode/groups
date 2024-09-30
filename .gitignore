@@ -1,0 +1,37 @@
+# Plans, Spécifications & Documentation d'Architecture
+0*.md
+*plan*.md
+02_repartition_etudiants_react_express_mysql.md
+docs/
+
+# Dépendances
+node_modules/
+.pnpm-store/
+
+# Build
+dist/
+build/
+.turbo/
+
+# Environnement
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Couverture & Tests
+coverage/
+playwright-report/
+test-results/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
