@@ -1,0 +1,55 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: groups_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: groups_db
+      MYSQL_USER: groups_user
+      MYSQL_PASSWORD: groups_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - groups_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "groups_user", "-pgroups_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: groups_api
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: groups_user
+      DB_PASSWORD: groups_password
+      DB_NAME: groups_db
+      SESSION_SECRET: ultra_secure_random_session_secret_for_sha256_production_12345
+      CORS_ORIGIN: http://localhost:5173
+    ports:
+      - "3001:3001"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: groups_web
+    restart: always
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  groups_mysql_data:
