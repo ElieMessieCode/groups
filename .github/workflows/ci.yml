@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build domain
+        run: pnpm --filter @groups/domain build
+
       - name: Typecheck
         run: pnpm typecheck
 
